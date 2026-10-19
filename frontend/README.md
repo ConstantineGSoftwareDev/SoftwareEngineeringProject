@@ -1,0 +1,1 @@
+This README is specifically for the frontend part of this app. Refer to the main README at the root folder; Nothing to see here for now. 
