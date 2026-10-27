@@ -93,7 +93,7 @@ export default function EventCreateForm() {
         <div className="mb-6 p-5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 dark:bg-emerald-950/40 dark:border-emerald-900/60 dark:text-emerald-200">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-base">
-              🎉 Event successfully generated!
+              Event successfully generated!
             </span>
             <span
               className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${
@@ -105,13 +105,6 @@ export default function EventCreateForm() {
               {createdEvent.status}
             </span>
           </div>
-          <p className="mt-2 text-sm text-emerald-800 dark:text-emerald-300">
-            <strong>ID:</strong> {createdEvent.id} |{" "}
-            <strong>Title:</strong> {createdEvent.title} |{" "}
-            <strong>Location:</strong> {createdEvent.location} |{" "}
-            <strong>Capacity:</strong> {createdEvent.capacity} |{" "}
-            <strong>Price:</strong> ${createdEvent.price.toFixed(2)}
-          </p>
         </div>
       )}
 
