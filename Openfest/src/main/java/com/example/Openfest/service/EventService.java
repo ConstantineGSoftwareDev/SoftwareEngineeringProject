@@ -2,14 +2,20 @@ package com.example.Openfest.service;
 
 import com.example.Openfest.dto.CreateEventRequest;
 import com.example.Openfest.dto.EventResponse;
+import com.example.Openfest.dto.UpdateEventRequest;
 import com.example.Openfest.entity.Event;
 import com.example.Openfest.entity.EventStatus;
 import com.example.Openfest.entity.User;
 import com.example.Openfest.repository.EventRepository;
 import com.example.Openfest.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -49,6 +55,61 @@ public class EventService {
 
         Event savedEvent = eventRepository.save(event);
         return EventResponse.fromEntity(savedEvent);
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventResponse> getEventsByCreator(String authenticatedEmail) {
+        User creator = resolveCreator(authenticatedEmail);
+        List<Event> events = eventRepository.findByCreatorIdOrderByCreatedAtDesc(creator.getId());
+        return events.stream()
+                .map(EventResponse::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public EventResponse getEventById(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        return EventResponse.fromEntity(event);
+    }
+
+    @Transactional
+    public EventResponse updateEvent(Long eventId, UpdateEventRequest request, String authenticatedEmail) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+
+        User creator = resolveCreator(authenticatedEmail);
+        if (event.getCreator() != null && !event.getCreator().getId().equals(creator.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to modify this event");
+        }
+
+        event.setTitle(request.getTitle().trim());
+        event.setDescription(request.getDescription() != null ? request.getDescription().trim() : null);
+        event.setLocation(request.getLocation().trim());
+        event.setCapacity(request.getCapacity());
+        event.setAgeRestriction(request.getAgeRestriction());
+        event.setPrice(request.getPrice());
+        if (request.getStatus() != null) {
+            event.setStatus(request.getStatus());
+        }
+
+        Event updated = eventRepository.save(event);
+        return EventResponse.fromEntity(updated);
+    }
+
+    @Transactional
+    public EventResponse updateEventStatus(Long eventId, EventStatus newStatus, String authenticatedEmail) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+
+        User creator = resolveCreator(authenticatedEmail);
+        if (event.getCreator() != null && !event.getCreator().getId().equals(creator.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to modify this event");
+        }
+
+        event.setStatus(newStatus);
+        Event updated = eventRepository.save(event);
+        return EventResponse.fromEntity(updated);
     }
 
     /**

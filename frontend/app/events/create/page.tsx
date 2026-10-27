@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import EventCreateForm from "./EventCreateForm";
 
 export const metadata: Metadata = {
@@ -9,7 +10,13 @@ export const metadata: Metadata = {
 export default function CreateEventPage() {
   return (
     <div className="max-w-2xl mx-auto py-10 px-4 sm:px-6">
-      <div className="mb-8">
+      <div className="mb-6">
+        <Link
+          href="/dashboard"
+          className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1 mb-4"
+        >
+          ← Back to Dashboard
+        </Link>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-zinc-100">
           Create New Event
         </h1>

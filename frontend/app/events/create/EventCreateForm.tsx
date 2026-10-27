@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   createEventAction,
   type AgeRestriction,
@@ -22,6 +23,20 @@ export default function EventCreateForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdEvent, setCreatedEvent] = useState<EventResponse | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  const resetForm = () => {
+    setFormData({
+      title: "",
+      description: "",
+      location: "",
+      capacity: "",
+      ageRestriction: "ALL_AGES",
+      price: "0.00",
+    });
+    setErrors({});
+    setCreatedEvent(null);
+    setServerError(null);
+  };
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -90,7 +105,7 @@ export default function EventCreateForm() {
       )}
 
       {createdEvent && (
-        <div className="mb-6 p-5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 dark:bg-emerald-950/40 dark:border-emerald-900/60 dark:text-emerald-200">
+        <div className="mb-6 p-5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 dark:bg-emerald-950/40 dark:border-emerald-900/60 dark:text-emerald-200 shadow-sm">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-base">
               Event successfully generated!
@@ -104,6 +119,21 @@ export default function EventCreateForm() {
             >
               {createdEvent.status}
             </span>
+          </div>
+          <div className="mt-4 pt-3 border-t border-emerald-200 dark:border-emerald-800 flex items-center gap-3">
+            <Link
+              href="/dashboard"
+              className="px-4 py-2 text-xs font-semibold rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition-colors"
+            >
+              View in Dashboard →
+            </Link>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="px-4 py-2 text-xs font-medium rounded-lg border border-emerald-300 dark:border-emerald-700 bg-white dark:bg-zinc-800 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-zinc-700 transition-colors"
+            >
+              + Create Another Event
+            </button>
           </div>
         </div>
       )}
