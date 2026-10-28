@@ -1,7 +1,17 @@
-"use server";
 
-export type AgeRestriction = "ALL_AGES" | "THIRTEEN_PLUS" | "EIGHTEEN_PLUS" | "TWENTY_ONE_PLUS";
-export type EventStatus = "DRAFT" | "PUBLISHED" | "CLOSED" | "SOLD_OUT";
+import { getCsrfToken } from "@/lib/api";
+
+export type AgeRestriction =
+  | "ALL_AGES"
+  | "THIRTEEN_PLUS"
+  | "EIGHTEEN_PLUS"
+  | "TWENTY_ONE_PLUS";
+
+export type EventStatus =
+  | "DRAFT"
+  | "PUBLISHED"
+  | "CLOSED"
+  | "SOLD_OUT";
 
 export interface CreateEventPayload {
   title: string;
@@ -37,134 +47,131 @@ export interface EventResponse {
   createdAt: string;
 }
 
-const getBackendUrl = () => process.env.INTERNAL_API_URL || "http://localhost:8080";
+const getBackendUrl = () =>
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:8080";
 
-export async function createEventAction(payload: CreateEventPayload): Promise<EventResponse> {
-  const backendUrl = getBackendUrl();
+// Shared error handling
+async function handleResponse<T>(
+  response: Response,
+  fallbackMessage: string
+): Promise<T> {
+  if (!response.ok) {
+    let errorMessage =
+      `${fallbackMessage} (${response.status})`;
 
-  let res: Response;
-  try {
-    res = await fetch(`${backendUrl}/api/events`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-  } catch {
-    throw new Error("An unexpected error occured.");
-  }
-
-  if (!res.ok) {
-    let errorMessage = `Server returned status ${res.status}`;
     try {
-      const errorData = await res.json();
-      if (errorData?.message) {
-        errorMessage = errorData.message;
+      const data = await response.json();
+
+      if (typeof data?.message === "string") {
+        errorMessage = data.message;
       }
     } catch {
-      if (res.status === 502 || res.status === 504 || res.status === 500) {
-        errorMessage = "An unexpected error occured.";
-      }
+      // Keep the fallback error message.
     }
+
     throw new Error(errorMessage);
   }
 
-  return await res.json();
+  return response.json() as Promise<T>;
 }
 
-export async function getCreatorEventsAction(): Promise<EventResponse[]> {
+// Create event
+export async function createEventAction(
+  payload: CreateEventPayload
+): Promise<EventResponse> {
   const backendUrl = getBackendUrl();
 
-  let res: Response;
-  try {
-    res = await fetch(`${backendUrl}/api/events/creator`, {
+  const csrf = await getCsrfToken();
+
+  const response = await fetch(`${backendUrl}/api/events`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      [csrf.headerName]: csrf.token,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  return handleResponse<EventResponse>(
+    response,
+    "Failed to create event"
+  );
+}
+
+// Get creator's events
+export async function getCreatorEventsAction():
+  Promise<EventResponse[]> {
+  const backendUrl = getBackendUrl();
+
+  const response = await fetch(
+    `${backendUrl}/api/events/creator`,
+    {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      credentials: "include",
       cache: "no-store",
-    });
-  } catch {
-    throw new Error("Unable to connect to the server. Please check your backend.");
-  }
-
-  if (!res.ok) {
-    let errorMessage = `Failed to fetch events (${res.status})`;
-    try {
-      const errorData = await res.json();
-      if (errorData?.message) errorMessage = errorData.message;
-    } catch {
-      // fallback
     }
-    throw new Error(errorMessage);
-  }
+  );
 
-  return await res.json();
+  return handleResponse<EventResponse[]>(
+    response,
+    "Failed to fetch events"
+  );
 }
 
+// Update event details
 export async function updateEventAction(
   id: number,
   payload: UpdateEventPayload
 ): Promise<EventResponse> {
   const backendUrl = getBackendUrl();
 
-  let res: Response;
-  try {
-    res = await fetch(`${backendUrl}/api/events/${id}`, {
+  const csrf = await getCsrfToken();
+
+  const response = await fetch(
+    `${backendUrl}/api/events/${id}`,
+    {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        [csrf.headerName]: csrf.token,
       },
       body: JSON.stringify(payload),
-    });
-  } catch {
-    throw new Error("Unable to connect to the server.");
-  }
-
-  if (!res.ok) {
-    let errorMessage = `Failed to update event (${res.status})`;
-    try {
-      const errorData = await res.json();
-      if (errorData?.message) errorMessage = errorData.message;
-    } catch {
-      // fallback
     }
-    throw new Error(errorMessage);
-  }
+  );
 
-  return await res.json();
+  return handleResponse<EventResponse>(
+    response,
+    "Failed to update event"
+  );
 }
 
+// Update event status
 export async function updateEventStatusAction(
   id: number,
   status: EventStatus
 ): Promise<EventResponse> {
   const backendUrl = getBackendUrl();
 
-  let res: Response;
-  try {
-    res = await fetch(`${backendUrl}/api/events/${id}/status`, {
+  const csrf = await getCsrfToken();
+
+  const response = await fetch(
+    `${backendUrl}/api/events/${id}/status`,
+    {
       method: "PATCH",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        [csrf.headerName]: csrf.token,
       },
       body: JSON.stringify({ status }),
-    });
-  } catch {
-    throw new Error("Unable to connect to the server.");
-  }
-
-  if (!res.ok) {
-    let errorMessage = `Failed to update event status (${res.status})`;
-    try {
-      const errorData = await res.json();
-      if (errorData?.message) errorMessage = errorData.message;
-    } catch {
-      // fallback
     }
-    throw new Error(errorMessage);
-  }
+  );
 
-  return await res.json();
+  return handleResponse<EventResponse>(
+    response,
+    "Failed to update event status"
+  );
 }
