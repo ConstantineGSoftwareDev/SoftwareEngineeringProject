@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import java.util.Map;
 
 @RestController
@@ -31,4 +35,31 @@ public class AuthController {
                 .status(HttpStatus.CREATED)
                 .body(Map.of("id", userId));
     }
+
+    
+@GetMapping("/csrf")
+public Map<String, String> csrf(CsrfToken token) {
+    return Map.of(
+        "headerName", token.getHeaderName(),
+        "token", token.getToken()
+    );
+}
+
+@GetMapping("/me")
+public ResponseEntity<Map<String, String>> me(
+        Authentication authentication) {
+
+    if (authentication == null ||
+        !authentication.isAuthenticated()) {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .build();
+    }
+
+    return ResponseEntity.ok(
+        Map.of("email", authentication.getName())
+    );
+}
+
+
 }

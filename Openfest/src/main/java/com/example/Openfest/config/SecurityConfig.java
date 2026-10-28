@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -40,23 +41,87 @@ public class SecurityConfig {
         return source;
     }
 
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http) throws Exception {
+
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .cors(cors -> cors.configurationSource(
+                corsConfigurationSource()
+            ))
+
             .csrf(csrf -> csrf
-                // Exempt API routes from CSRF token requirements for direct REST requests
-                .ignoringRequestMatchers("/api/**")
+                .csrfTokenRepository(
+                    new HttpSessionCsrfTokenRepository()
+                )
             )
+
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                // TODO: Update this line once authentication is implemented for event creation to allow based on roles.
-                .requestMatchers("/api/events/**").permitAll()
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/auth/csrf"
+                ).permitAll()
+
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/auth/register"
+                ).permitAll()
+
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/events/**"
+                ).permitAll()
+
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form.disable())
-            .httpBasic(basic -> basic.disable());
+
+            .formLogin(form -> form
+                .loginProcessingUrl("/api/auth/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+
+                .successHandler((request, response, authentication) -> {
+                    response.setStatus(200);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    response.getWriter().write(
+                        "{\"message\":\"Login successful\"}"
+                    );
+                })
+
+                .failureHandler((request, response, exception) -> {
+                    response.sendError(
+                        401, "Invalid credentials"
+                    );
+                })
+
+                .permitAll()
+            )
+
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint(
+                    (request, response, exception) ->
+                        response.sendError(401, "Unauthorized")
+                )
+            )
+
+            .logout(logout -> logout
+                .logoutUrl("/api/auth/logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.setStatus(200);
+                    response.setContentType("application/json");
+                    response.getWriter().write(
+                        "{\"message\":\"Logged out\"}"
+                    );
+                })
+            );
 
         return http.build();
     }
+
 }
