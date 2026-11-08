@@ -5,6 +5,7 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCurrentUser, logout } from "@/lib/api";
+import EventAttendees from "./EventAttendees";
 import {
   getCreatorEventsAction,
   updateEventAction,
@@ -654,6 +655,10 @@ export default function CreatorDashboard() {
                     </span>
                   </div>
                 </div>
+              </div>
+
+              <div className="px-5 pb-4">
+                <EventAttendees eventId={evt.id} />
               </div>
 
               {/* Action Buttons Bar */}

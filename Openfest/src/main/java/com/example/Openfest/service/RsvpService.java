@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class RsvpService {
@@ -31,18 +32,23 @@ public class RsvpService {
         this.userRepository = userRepository;
     }
 
-    @Transactional
-    public Rsvp reserveSpot(Long eventId, String email) {
-
+    private User requireUser(String email) {
         if (email == null || email.isBlank()
                 || "anonymousUser".equalsIgnoreCase(email)) {
             throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Please log in to RSVP");
+                    HttpStatus.UNAUTHORIZED, "Please log in");
         }
 
-        User attendee = userRepository.findByEmail(email)
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED, "User not found"));
+    }
+
+    // Reserve a spot at a free event
+    @Transactional
+    public Rsvp reserveSpot(Long eventId, String email) {
+
+        User attendee = requireUser(email);
 
         Event event = eventRepository.findByIdForUpdate(eventId)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -77,5 +83,31 @@ public class RsvpService {
         }
 
         return rsvpRepository.save(new Rsvp(event, attendee));
+    }
+
+    // Attendee: view their own reservations
+    @Transactional(readOnly = true)
+    public List<Rsvp> getMyReservations(String email) {
+        User attendee = requireUser(email);
+        return rsvpRepository.findByUserId(attendee.getId());
+    }
+
+    // Creator: view reservations for their own event
+    @Transactional(readOnly = true)
+    public List<Rsvp> getEventReservations(Long eventId, String email) {
+        User currentUser = requireUser(email);
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Event not found"));
+
+        if (event.getCreator() == null
+                || !event.getCreator().getId().equals(currentUser.getId())) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Only the event creator can view attendees");
+        }
+
+        return rsvpRepository.findByEventId(eventId);
     }
 }
