@@ -175,3 +175,24 @@ export async function updateEventStatusAction(
     "Failed to update event status"
   );
 }
+
+// Get a single event by ID
+export async function getEventByIdAction(
+  id: number
+): Promise<EventResponse> {
+  const backendUrl = getBackendUrl();
+
+  const response = await fetch(
+    `${backendUrl}/api/events/${id}`,
+    {
+      method: "GET",
+      credentials: "include",
+      cache: "no-store",
+    }
+  );
+
+  return handleResponse<EventResponse>(
+    response,
+    "Failed to fetch event"
+  );
+}
