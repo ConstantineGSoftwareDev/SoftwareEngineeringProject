@@ -3,6 +3,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
+import GoogleMapsDirections from "../GoogleMapsDirections";
 import { useRouter } from "next/navigation";
 import { getCurrentUser, logout } from "@/lib/api";
 import {
@@ -611,6 +612,9 @@ export default function CreatorDashboard() {
                       {evt.location}
                     </span>
                   </div>
+                  <div className="flex justify-end mt-2">
+                  <GoogleMapsDirections location={evt.location} />
+                  </div> 
 
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-gray-700 dark:text-zinc-300">
