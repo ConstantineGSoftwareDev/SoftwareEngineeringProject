@@ -380,7 +380,7 @@ export default function CreatorDashboard() {
             edit information, or close sign-ups.
           </p>
 
-          <p className="mt-2 text-sm text-indigo-600 dark:text-indigo-400">
+          <p className="mt-2 text-sm text-blue-600 dark:text-blue-400">
             Signed in as: {currentUser}
           </p>
         </div>
@@ -389,7 +389,7 @@ export default function CreatorDashboard() {
           <button
             onClick={fetchEvents}
             disabled={isLoading}
-            className="px-3.5 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-700 dark:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors disabled:opacity-50"
+            className="px-3.5 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-700 dark:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:opacity-50"
             title="Refresh event list"
           >
             {isLoading ? "Refreshing..." : "↻ Refresh"}
@@ -397,7 +397,7 @@ export default function CreatorDashboard() {
 
           <Link
             href="/events/create"
-            className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-zinc-900 transition-colors"
+            className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-900 transition-colors"
           >
             + Create New Event
           </Link>
@@ -508,7 +508,7 @@ export default function CreatorDashboard() {
             placeholder="Search events by title or location..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-3 pr-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full pl-3 pr-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -525,7 +525,7 @@ export default function CreatorDashboard() {
               onClick={() => setSelectedStatus(st)}
               className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
                 selectedStatus === st
-                  ? "bg-indigo-600 text-white"
+                  ? "bg-blue-600 text-white"
                   : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400 hover:bg-gray-200 dark:hover:bg-zinc-700"
               }`}
             >
@@ -538,7 +538,7 @@ export default function CreatorDashboard() {
       {/* Events List */}
       {isLoading ? (
         <div className="py-16 text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
 
           <p className="mt-4 text-sm text-gray-500 dark:text-zinc-400">
             Loading your events...
@@ -546,7 +546,7 @@ export default function CreatorDashboard() {
         </div>
       ) : filteredEvents.length === 0 ? (
         <div className="text-center py-16 px-4 bg-white dark:bg-zinc-900 rounded-xl border border-dashed border-gray-300 dark:border-zinc-800">
-          <div className="mx-auto w-12 h-12 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold">
+          <div className="mx-auto w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold">
             📅
           </div>
 
@@ -566,7 +566,7 @@ export default function CreatorDashboard() {
             <div className="mt-6">
               <Link
                 href="/events/create"
-                className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition-colors"
+                className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors"
               >
                 + Create Your First Event
               </Link>
@@ -747,7 +747,7 @@ export default function CreatorDashboard() {
                       title: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
                 {editErrors.title && (
@@ -771,7 +771,7 @@ export default function CreatorDashboard() {
                       description: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -789,7 +789,7 @@ export default function CreatorDashboard() {
                       location: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
                 {editErrors.location && (
@@ -816,7 +816,7 @@ export default function CreatorDashboard() {
                           parseInt(e.target.value, 10) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
 
                   {editErrors.capacity && (
@@ -840,7 +840,7 @@ export default function CreatorDashboard() {
                           e.target.value as AgeRestriction,
                       })
                     }
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="ALL_AGES">All Ages</option>
                     <option value="THIRTEEN_PLUS">13+ Only</option>
@@ -870,7 +870,7 @@ export default function CreatorDashboard() {
                           parseFloat(e.target.value) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
 
                   {editErrors.price && (
@@ -894,7 +894,7 @@ export default function CreatorDashboard() {
                           e.target.value as EventStatus,
                       })
                     }
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="DRAFT">Draft</option>
                     <option value="PUBLISHED">Published</option>
@@ -918,7 +918,7 @@ export default function CreatorDashboard() {
                 type="button"
                 disabled={isUpdating}
                 onClick={handleSaveEdit}
-                className="px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                className="px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:bg-blue-700 transition-colors disabled:opacity-50"
               >
                 {isUpdating ? "Saving..." : "Save Changes"}
               </button>

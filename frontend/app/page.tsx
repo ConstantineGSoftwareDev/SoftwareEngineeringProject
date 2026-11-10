@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
       <div className="max-w-xl mx-auto space-y-6">
-        <div className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300">
+        <div className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">
           OpenFest Platform
         </div>
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
@@ -17,7 +17,7 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Link
             href="/dashboard"
-            className="w-full sm:w-auto px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md transition-colors"
+            className="w-full sm:w-auto px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md transition-colors"
           >
             Go to Creator Dashboard →
           </Link>

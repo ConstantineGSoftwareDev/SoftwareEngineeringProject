@@ -13,7 +13,7 @@ export default function CreateEventPage() {
       <div className="mb-6">
         <Link
           href="/dashboard"
-          className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1 mb-4"
+          className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1 mb-4"
         >
           ← Back to Dashboard
         </Link>
