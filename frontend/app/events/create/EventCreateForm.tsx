@@ -158,7 +158,7 @@ export default function EventCreateForm() {
               setFormData({ ...formData, title: e.target.value })
             }
             placeholder="e.g. Austin Outdoor Summer Jam"
-            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 sm:text-sm"
           />
           {errors.title && (
             <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.title}</p>
@@ -181,7 +181,7 @@ export default function EventCreateForm() {
               setFormData({ ...formData, description: e.target.value })
             }
             placeholder="Provide attendees with key information about the event..."
-            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 sm:text-sm"
           />
         </div>
 
@@ -201,7 +201,7 @@ export default function EventCreateForm() {
               setFormData({ ...formData, location: e.target.value })
             }
             placeholder="e.g. Zilker Park, Austin, TX"
-            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 sm:text-sm"
           />
           {errors.location && (
             <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.location}</p>
@@ -226,7 +226,7 @@ export default function EventCreateForm() {
                 setFormData({ ...formData, capacity: e.target.value })
               }
               placeholder="e.g. 250"
-              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 shadow-sm focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 sm:text-sm"
             />
             {errors.capacity && (
               <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.capacity}</p>
@@ -250,7 +250,7 @@ export default function EventCreateForm() {
                   ageRestriction: e.target.value as AgeRestriction,
                 })
               }
-              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 px-3 py-2 text-gray-900 dark:text-zinc-100 shadow-sm focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 sm:text-sm"
             >
               <option value="ALL_AGES" className="dark:bg-zinc-800 dark:text-zinc-100">All Ages</option>
               <option value="THIRTEEN_PLUS" className="dark:bg-zinc-800 dark:text-zinc-100">13+ Only</option>
@@ -282,7 +282,7 @@ export default function EventCreateForm() {
                 setFormData({ ...formData, price: e.target.value })
               }
               placeholder="0.00"
-              className="block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 pl-7 pr-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 sm:text-sm"
+              className="block w-full rounded-md border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 pl-7 pr-3 py-2 text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 sm:text-sm"
             />
           </div>
           <p className="mt-1 text-xs text-gray-500 dark:text-zinc-400">
@@ -299,7 +299,7 @@ export default function EventCreateForm() {
             type="button"
             disabled={isSubmitting}
             onClick={() => handleSubmit("DRAFT")}
-            className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-zinc-200 bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-zinc-900 disabled:opacity-50 transition-colors"
+            className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-zinc-200 bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-900 disabled:opacity-50 transition-colors"
           >
             {isSubmitting ? "Saving..." : "Save as Draft"}
           </button>
@@ -307,7 +307,7 @@ export default function EventCreateForm() {
             type="button"
             disabled={isSubmitting}
             onClick={() => handleSubmit("PUBLISHED")}
-            className="w-full sm:w-auto px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-zinc-900 disabled:opacity-50 transition-colors"
+            className="w-full sm:w-auto px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-900 disabled:opacity-50 transition-colors"
           >
             {isSubmitting ? "Publishing..." : "Publish Event"}
           </button>

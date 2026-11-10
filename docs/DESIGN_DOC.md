@@ -32,6 +32,7 @@ To ensure visual consistency across all pages, developers must adhere to the fol
 ### Co-location
 - Components used exclusively by a single page or feature reside in a `components/` directory co-located with the route (e.g., `frontend/app/dashboard/components/`).
 - Components shared across two or more routes reside in a shared components directory at the root of the app (e.g., `frontend/components/shared/`).
+- Components that are strictly UI primitives should reside in another shared components directory at the root of the app (`frontend/components/ui`).
 
 ### Separation of Concerns
 - **Presentational Components**: Focus strictly on layout and styling. They receive data and event handlers exclusively via props.
